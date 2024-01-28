@@ -7,66 +7,30 @@
 
         <div class="mt-5 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
           <div class="sm:col-span-3">
-            <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Nome</label>
+            <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Nome *</label>
             <div class="mt-1">
-              <input type="text" name="name" id="name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+              <input type="text" name="name" id="name" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
             </div>
           </div>
 
           <div class="sm:col-span-3">
-            <label for="last-name" class="block text-sm font-medium leading-6 text-gray-900">Documento (CPF)</label>
+            <label for="last-name" class="block text-sm font-medium leading-6 text-gray-900">Documento (CPF) *</label>
             <div class="mt-1">
-              <input type="text" name="document" id="document" v-mask="'###.###.###-##'" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+              <input type="text" name="document" id="document" required v-mask="'###.###.###-##'" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
             </div>
           </div>
 
           <div class="sm:col-span-3">
-            <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Senha</label>
+            <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Senha *</label>
             <div class="mt-1">
-              <input id="password" name="password" type="password" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+              <input id="password" name="password" type="password" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
             </div>
           </div>
           
           <div class="sm:col-span-3">
-            <label for="confirm-password" class="block text-sm font-medium leading-6 text-gray-900">Confirmar Senha</label>
+            <label for="confirm-password" class="block text-sm font-medium leading-6 text-gray-900">Confirmar Senha *</label>
             <div class="mt-1">
-              <input id="confirm-password" name="confirm-password" type="password" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-            </div>
-          </div>
-        </div>
-        <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-          <div class="sm:col-span-2">
-            <label for="cep" class="block text-sm font-medium leading-6 text-gray-900">CEP</label>
-            <div class="mt-1">
-              <input type="text" name="cep" id="cep" autocomplete="cep" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-            </div>
-          </div>
-
-          <div class="sm:col-span-2">
-            <label for="state" class="block text-sm font-medium leading-6 text-gray-900">Estado</label>
-            <div class="mt-1">
-              <input type="text" name="state" id="state" autocomplete="state" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-            </div>
-          </div>
-          
-          <div class="sm:col-span-2">
-            <label for="city" class="block text-sm font-medium leading-6 text-gray-900">Cidade</label>
-            <div class="mt-1">
-              <input type="text" name="city" id="city" autocomplete="address-level2" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-            </div>
-          </div>
-
-          <div class="sm:col-span-3">
-            <label for="street-address" class="block text-sm font-medium leading-6 text-gray-900">Endereço</label>
-            <div class="mt-1">
-              <input type="text" name="address" id="address" autocomplete="address" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-            </div>
-          </div>
-          
-          <div class="sm:col-span-3">
-            <label for="region" class="block text-sm font-medium leading-6 text-gray-900">Número</label>
-            <div class="mt-1">
-              <input type="text" name="region" id="region" autocomplete="address-level1" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+              <input id="confirm-password" name="confirm-password" required type="password" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
             </div>
           </div>
         </div>
