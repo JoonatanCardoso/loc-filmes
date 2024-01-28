@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import UserConfig from '../components/UserConfig.vue'
+import ClientConfig from '../components/ClientConfig.vue'
 </script>
 
 <template>
   <main>
-    <UserConfig />
+    <ClientConfig />
   </main>
 </template>
