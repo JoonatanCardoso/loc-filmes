@@ -1,12 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import LoginPage from '../views/LoginPage.vue'
-import UsersPage from '../views/UsersPage.vue'
-import LocationPage from '../views/LocationPage.vue'
-import LocationDetailsPage from '../views/LocationDetailsPage.vue'
-import ClientsPage from '../views/ClientsPage.vue'
-import FilmsPage from '../views/FilmsPage.vue'
+import LoginPage from '@/views/LoginPage.vue'
+import UsersPage from '@/views/UsersPage.vue'
+import LocationPage from '@/views/LocationPage.vue'
+import LocationDetailsPage from '@/views/LocationDetailsPage.vue'
+import ClientsPage from '@/views/ClientsPage.vue'
+import FilmsPage from '@/views/FilmsPage.vue'
 import UserConfigPage from '@/views/UserConfigPage.vue'
 import ClientConfigPage from '@/views/ClientConfigPage.vue'
+import LayoutClean from '@/layouts/LayoutClean.vue'
+import LayoutPanel from '@/layouts/LayoutPanel.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -14,42 +16,70 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      component: LoginPage
+      components: {
+        default: LoginPage,
+        layout: LayoutClean,
+      },
     },
     {
       path: '/users',
       name: 'users',
-      component: UsersPage
-    },
-    {
-      path: '/location',
-      name: 'location',
-      component: LocationPage
-    },
-    {
-      path: '/locationdetails',
-      name: 'locationdetails',
-      component: LocationDetailsPage
+      components: {
+        default: UsersPage,
+        layout: LayoutPanel,
+      },
+      meta: { title: 'Usuários' }
     },
     {
       path: '/clients',
       name: 'clients',
-      component: ClientsPage
+      components: {
+        default: ClientsPage,
+        layout: LayoutPanel,
+      },
+      meta: { title: 'Clientes' }
+    },
+    {
+      path: '/location',
+      name: 'location',
+      components: {
+        default: LocationPage,
+        layout: LayoutPanel,
+      },
+      meta: { title: 'Locação' }
     },
     {
       path: '/films',
       name: 'films',
-      component: FilmsPage
+      components: {
+        default: FilmsPage,
+        layout: LayoutPanel,
+      },
+      meta: { title: 'Filmes' }
     },
     {
       path: '/user',
       name: 'user',
-      component: UserConfigPage
+      components: {
+        default: UserConfigPage,
+        layout: LayoutClean,
+      },
     },
     {
       path: '/client',
       name: 'client',
-      component: ClientConfigPage
+      components: {
+        default: ClientConfigPage,
+        layout: LayoutClean,
+      },
+    },
+    {
+      path: '/location-details',
+      name: 'location-details',
+      components: {
+        default: LocationDetailsPage,
+        layout: LayoutClean,
+      },
     }
   ]
 })
