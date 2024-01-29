@@ -64,6 +64,7 @@ const router = createRouter({
         default: UserConfigPage,
         layout: LayoutClean,
       },
+      props: true,
     },
     {
       path: '/client',
@@ -72,6 +73,7 @@ const router = createRouter({
         default: ClientConfigPage,
         layout: LayoutClean,
       },
+      props: true,
     },
     {
       path: '/location-details',
