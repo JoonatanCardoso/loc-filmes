@@ -48,6 +48,9 @@
                 </Menu>
             </div>
             </li>
+            <div class="mt-6 flex items-center justify-end">
+              <button @click="newUser" class="mt-5 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Novo Usuário</button>
+            </div>
         </ul>
     </div>
 </template>
@@ -56,6 +59,7 @@
 import { ref, onMounted } from 'vue';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
 import { ChevronDownIcon } from '@heroicons/vue/20/solid';
+import { useRouter } from 'vue-router'
 
 const users = ref([]);
 
@@ -68,4 +72,9 @@ const deleteUser = (index) => {
   users.value.splice(index, 1);
   localStorage.setItem('users', JSON.stringify(users.value));
 };
+
+const router = useRouter()
+const newUser = () => {
+    router.push({ name: 'user' })
+}
 </script>
