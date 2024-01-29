@@ -1,7 +1,7 @@
 <template>
     <div>
         <ul role="list" class="divide-y divide-gray-100 mx-10">
-            <li v-for="person in users" :key="person.id" class="flex justify-between gap-x-6 py-5">
+            <li v-for="(person, index) in users" :key="person.id" class="flex justify-between gap-x-6 py-5">
             <div class="flex min-w-0 gap-x-4">
                 <img class="h-12 w-12 flex-none rounded-full bg-gray-50" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="" />
                 <div class="min-w-0 flex-auto">
@@ -39,7 +39,7 @@
                                 <MenuItem v-slot="{ active }">
                                     <a href="#" :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">Editar</a>
                                 </MenuItem>
-                                <MenuItem v-slot="{ active }">
+                                <MenuItem  @click="() => deleteUser(index)" v-slot="{ active }">
                                     <a href="#" :class="[active ? 'bg-gray-100 text-red-600' : 'text-red-600', 'block px-4 py-2 text-sm']">Deletar</a>
                                 </MenuItem>
                             </div>
@@ -63,4 +63,9 @@ onMounted(async () => {
   const storedUsers = localStorage.getItem('users');
   users.value = storedUsers ? JSON.parse(storedUsers) : [];
 });
+
+const deleteUser = (index) => {
+  users.value.splice(index, 1);
+  localStorage.setItem('users', JSON.stringify(users.value));
+};
 </script>
