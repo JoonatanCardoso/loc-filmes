@@ -1,12 +1,12 @@
 <template>
     <div>
         <ul role="list" class="divide-y divide-gray-100 mx-10">
-            <li v-for="person in people" :key="person.email" class="flex justify-between gap-x-6 py-5">
+            <li v-for="person in users" :key="person.id" class="flex justify-between gap-x-6 py-5">
             <div class="flex min-w-0 gap-x-4">
-                <img class="h-12 w-12 flex-none rounded-full bg-gray-50" :src="person.imageUrl" alt="" />
+                <img class="h-12 w-12 flex-none rounded-full bg-gray-50" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="" />
                 <div class="min-w-0 flex-auto">
-                    <p class="text-sm font-semibold leading-6 text-gray-900">{{ person.name }}</p>
-                    <div v-if="person.status != 'active'" class="mt-1 flex items-center gap-x-1.5">
+                    <p class="text-sm font-semibold leading-6 text-gray-900">{{ person.name }} {{ person.id }}</p>
+                    <div v-if="person.isActive !== true" class="mt-1 flex items-center gap-x-1.5">
                         <div class="flex-none rounded-full bg-emerald-500/20 p-1">
                             <div class="h-1.5 w-1.5 rounded-full bg-red-500" />
                         </div>
@@ -53,23 +53,14 @@
 </template>
 
 <script setup>
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
-import { ChevronDownIcon } from '@heroicons/vue/20/solid'
+import { ref, onMounted } from 'vue';
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
+import { ChevronDownIcon } from '@heroicons/vue/20/solid';
 
-const people = [
-  {
-    name: 'Gabriela Correa',
-    email: 'gabriela.correa@teste.com',
-    status: 'inative',
-    imageUrl:
-    'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-},
-{
-    name: 'Jaime Martins',
-    email: 'jaime.martins@teste.com',
-    status: 'active',
-    imageUrl:
-      'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  },
-]
+const users = ref([]);
+
+onMounted(async () => {
+  const storedUsers = localStorage.getItem('users');
+  users.value = storedUsers ? JSON.parse(storedUsers) : [];
+});
 </script>
