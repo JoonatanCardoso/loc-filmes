@@ -64,6 +64,7 @@ import { useRouter } from 'vue-router'
 import { ref } from 'vue';
 
 interface User {
+  id: number;
   name: string;
   document: string;
   password: string;
@@ -81,8 +82,13 @@ const password = ref('');
 const confirmPassword = ref('');
 const isActive = ref(true);
 
+const generateUniqueId = () => {
+  return new Date().getTime();
+};
+
 const handleSubmit = () => {
   const newUser: User = {
+    id: generateUniqueId(),
     name: name.value,
     document: document.value,
     password: password.value,
@@ -91,10 +97,8 @@ const handleSubmit = () => {
 
   users.value.push(newUser);
 
-  // Salvando no localStorage
   localStorage.setItem('users', JSON.stringify(users.value));
 
-  // Limpando os campos do formulário
   name.value = '';
   document.value = '';
   password.value = '';
