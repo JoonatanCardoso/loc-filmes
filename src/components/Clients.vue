@@ -112,8 +112,9 @@ const deleteClient = (index) => {
 }
 
 const router = useRouter()
+
 const newClient = () => {
-  router.push({ name: 'client' })
+  router.push({ name: 'client', params: { id: 'new'} })
 }
 
 const navigateToEditClient = (clientId) => {

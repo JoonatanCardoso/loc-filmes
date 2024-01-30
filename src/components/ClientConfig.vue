@@ -42,11 +42,13 @@
             >
             <div class="mt-1">
               <input
+                v-maska
+                data-maska="###.###.###-##"
+                placeholder="000.000.000-00"
                 type="text"
                 name="document"
                 v-model="document"
                 id="document"
-                v-mask="'###.###.###-##'"
                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>
@@ -127,7 +129,7 @@
                 v-model="city"
                 id="city"
                 autocomplete="address-level2"
-                :readonly="isStateReadonly"
+                :readonly="isCityReadonly"
                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>
@@ -144,7 +146,7 @@
                 v-model="address"
                 id="address"
                 autocomplete="address"
-                :readonly="isStateReadonly"
+                :readonly="isAddressReadonly"
                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>
@@ -161,7 +163,7 @@
                 v-model="district"
                 id="district"
                 autocomplete="district"
-                :readonly="isStateReadonly"
+                :readonly="isDistrictReadonly"
                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>
@@ -209,6 +211,7 @@ import { Switch, SwitchGroup } from '@headlessui/vue'
 import { useRouter } from 'vue-router'
 import { ref, onMounted, watch, onUnmounted } from 'vue'
 import axios from 'axios'
+import { vMaska } from 'maska'
 
 interface Client {
   id: number
@@ -245,35 +248,42 @@ const district = ref('')
 const adNumber = ref('')
 const isActive = ref(false)
 
-const isCepReadonly = ref(false);
-const isStateReadonly = ref(false);
+const isStateReadonly = ref(false)
+const isCityReadonly = ref(false)
+const isAddressReadonly = ref(false)
+const isDistrictReadonly = ref(false)
 
 const fetchCepData = async () => {
   try {
-    const response = await axios.get(`https://viacep.com.br/ws/${cep.value}/json/`)
-    const cepData = response.data
-    
-    isCepReadonly.value = !!cepData.cep
-    isStateReadonly.value = !!cepData.uf
+    if (cep.value.length === 8) {
+      const response = await axios.get(`https://viacep.com.br/ws/${cep.value}/json/`)
+      const cepData = response.data
 
-    state.value = cepData.uf || '';
-    city.value = cepData.localidade || '';
-    address.value = cepData.logradouro || '';
-    district.value = cepData.bairro || '';
+      isStateReadonly.value = !!cepData.uf
+      isCityReadonly.value = !!cepData.localidade
+      isAddressReadonly.value = !!cepData.logradouro
+      isDistrictReadonly.value = !!cepData.bairro
 
+      state.value = cepData.uf || ''
+      city.value = cepData.localidade || ''
+      address.value = cepData.logradouro || ''
+      district.value = cepData.bairro || ''
+    }
   } catch (error: any) {
     console.error('Erro ao obter dados do CEP:', error.message)
   }
 }
 
 onMounted(() => {
+  cleanFields()
+
   const unwatch = watch(
     () => router.currentRoute.value.params.id,
     (newClientId) => {
-      const clientId = getEditClientsId()
+      const clientId = router.currentRoute.value.params.id
 
-      if (clientId !== null) {
-        const clientToEdit = clients.value.find((client) => client.id === clientId)
+      if (clientId !== 'new') {
+        const clientToEdit = clients.value.find((client) => client.id.toString() === clientId)
 
         if (clientToEdit) {
           name.value = clientToEdit.name
@@ -290,19 +300,7 @@ onMounted(() => {
           isActive.value = clientToEdit.isActive
         }
       } else {
-        // (limpeza dos v-models)
-        name.value = ''
-        lastname.value = ''
-        email.value = ''
-        phone.value = ''
-        document.value = ''
-        cep.value = ''
-        state.value = ''
-        city.value = ''
-        address.value = ''
-        district.value = ''
-        adNumber.value = ''
-        isActive.value = false
+        cleanFields()
       }
     },
     { immediate: true }
@@ -313,18 +311,26 @@ onMounted(() => {
   })
 })
 
-const getEditClientsId = () => {
-  const editClientId = localStorage.getItem('editClientId')
-
-  const clientId = editClientId ? Number(editClientId) : null
-  return clientId
+const cleanFields = () => {
+  name.value = ''
+  lastname.value = ''
+  email.value = ''
+  phone.value = ''
+  document.value = ''
+  cep.value = ''
+  state.value = ''
+  city.value = ''
+  address.value = ''
+  district.value = ''
+  adNumber.value = ''
+  isActive.value = false
 }
 
 const handleSubmit = () => {
-  const clientId = getEditClientsId()
+  const clientId = router.currentRoute.value.params.id
 
   const newClient: Client = {
-    id: clientId !== null ? clientId : clients.value.length + 1,
+    id: clientId !== 'new' ? Number(clientId) : clients.value.length + 1,
     name: name.value,
     lastname: lastname.value,
     email: email.value,
@@ -339,8 +345,8 @@ const handleSubmit = () => {
     isActive: isActive.value
   }
 
-  if (clientId !== null) {
-    const clientIndex = clients.value.findIndex((client) => client.id === clientId)
+  if (clientId !== 'new') {
+    const clientIndex = clients.value.findIndex((client) => client.id.toString() === clientId)
 
     if (clientIndex !== -1) {
       clients.value[clientIndex] = newClient
