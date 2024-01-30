@@ -84,10 +84,10 @@ interface User {
   id: number
   email: string
   password: string
+  isActive: boolean
 }
 
 const users = ref<User[]>([])
-const id = ref<number>()
 const email = ref<string>('')
 const password = ref<string>('')
 const router = useRouter()
@@ -96,11 +96,17 @@ const localStorageKey = 'userLogin';
 
 const login = () => {
   const verify = users.value.find(
-    (user) => user.email === email.value && user.password === password.value
+    (user) => user.email === email.value && user.password === password.value && user.isActive === true
   )
 
   if (verify) {
     localStorage.setItem(localStorageKey, JSON.stringify(verify))
+
+    if (verify.email === 'admin@admin.com') {
+      users.value = users.value.filter(user => user.email !== 'admin@admin.com');
+      localStorage.setItem('users', JSON.stringify(users.value));
+    }
+
     notification.notify({
       title: `Bem vindo(a)!`,
       type: 'success'
