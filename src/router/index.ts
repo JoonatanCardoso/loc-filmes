@@ -58,13 +58,21 @@ const router = createRouter({
       props: true,
     },
     {
-      path: '/location',
-      name: 'location',
+      path: '/locations',
+      name: 'locations',
       components: {
         default: LocationPage,
         layout: LayoutPanel,
       },
       meta: { title: 'Locação' }
+    },
+    {
+      path: '/location',
+      name: 'location',
+      components: {
+        default: LocationDetailsPage,
+        layout: LayoutClean,
+      },
     },
     {
       path: '/films',
@@ -74,14 +82,6 @@ const router = createRouter({
         layout: LayoutPanel,
       },
       meta: { title: 'Filmes' }
-    },
-    {
-      path: '/location-details',
-      name: 'location-details',
-      components: {
-        default: LocationDetailsPage,
-        layout: LayoutClean,
-      },
     }
   ]
 })
