@@ -197,6 +197,13 @@ onMounted(async () => {
   user.value = storedUserLogin ? JSON.parse(storedUserLogin) : []
 })
 
+let pageName = ''
+const handleButtonClick = (route: any, page: string) => {
+  pageName = page
+  router.push({ name: route })
+}
+
+
 const logout = () => {
   localStorage.removeItem('userLogin')
   router.push({ name: 'login' })
