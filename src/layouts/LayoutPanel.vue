@@ -168,18 +168,18 @@ import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
 
 interface NavigationItem {
-  name: string;
-  href: string;
-  current: boolean;
+  name: string
+  href: string
+  current: boolean
 }
 
 interface UserNavigationItem {
-  name: string;
+  name: string
 }
 
 interface User {
-  email: string;
-  password: string;
+  email: string
+  password: string
 }
 
 const router = useRouter()
@@ -198,7 +198,7 @@ onMounted(async () => {
 })
 
 const logout = () => {
-  localStorage.removeItem('userLogin');
-  router.push({ name: 'login'})
-};
+  localStorage.removeItem('userLogin')
+  router.push({ name: 'login' })
+}
 </script>
