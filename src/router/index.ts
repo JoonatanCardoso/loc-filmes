@@ -20,6 +20,14 @@ const router = createRouter({
         default: LoginPage,
         layout: LayoutClean,
       },
+      beforeEnter: (to, from, next) => {
+        const userLogin = localStorage.getItem('userLogin');
+        if (userLogin) {
+          next({ name: 'films' });
+        } else {
+          next();
+        }
+      },
     },
     {
       path: '/users',
@@ -28,7 +36,15 @@ const router = createRouter({
         default: UsersPage,
         layout: LayoutPanel,
       },
-      meta: { title: 'Usuários' }
+      meta: { title: 'Usuários' },
+      beforeEnter: (to, from, next) => {
+        const userLogin = localStorage.getItem('userLogin');
+        if (!userLogin) {
+          next({ name: 'login' });
+        } else {
+          next();
+        }
+      },
     },
     {
       path: '/user/:id',
@@ -38,6 +54,14 @@ const router = createRouter({
         layout: LayoutClean,
       },
       props: true,
+      beforeEnter: (to, from, next) => {
+        const userLogin = localStorage.getItem('userLogin');
+        if (!userLogin) {
+          next({ name: 'login' });
+        } else {
+          next();
+        }
+      },
     },
     {
       path: '/clients',
@@ -46,7 +70,15 @@ const router = createRouter({
         default: ClientsPage,
         layout: LayoutPanel,
       },
-      meta: { title: 'Clientes' }
+      meta: { title: 'Clientes' },
+      beforeEnter: (to, from, next) => {
+        const userLogin = localStorage.getItem('userLogin');
+        if (!userLogin) {
+          next({ name: 'login' });
+        } else {
+          next();
+        }
+      },
     },
     {
       path: '/client/:id',
@@ -56,6 +88,14 @@ const router = createRouter({
         layout: LayoutClean,
       },
       props: true,
+      beforeEnter: (to, from, next) => {
+        const userLogin = localStorage.getItem('userLogin');
+        if (!userLogin) {
+          next({ name: 'login' });
+        } else {
+          next();
+        }
+      },
     },
     {
       path: '/locations',
@@ -64,7 +104,15 @@ const router = createRouter({
         default: LocationPage,
         layout: LayoutPanel,
       },
-      meta: { title: 'Locação' }
+      meta: { title: 'Locação' },
+      beforeEnter: (to, from, next) => {
+        const userLogin = localStorage.getItem('userLogin');
+        if (!userLogin) {
+          next({ name: 'login' });
+        } else {
+          next();
+        }
+      },
     },
     {
       path: '/location',
@@ -72,6 +120,14 @@ const router = createRouter({
       components: {
         default: LocationDetailsPage,
         layout: LayoutClean,
+      },
+      beforeEnter: (to, from, next) => {
+        const userLogin = localStorage.getItem('userLogin');
+        if (!userLogin) {
+          next({ name: 'login' });
+        } else {
+          next();
+        }
       },
     },
     {
@@ -81,9 +137,17 @@ const router = createRouter({
         default: FilmsPage,
         layout: LayoutPanel,
       },
-      meta: { title: 'Filmes' }
+      meta: { title: 'Filmes' },
+      beforeEnter: (to, from, next) => {
+        const userLogin = localStorage.getItem('userLogin');
+        if (!userLogin) {
+          next({ name: 'login' });
+        } else {
+          next();
+        }
+      },
     }
   ]
 })
 
-export default router
+export default router;
