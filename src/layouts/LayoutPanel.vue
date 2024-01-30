@@ -167,15 +167,30 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
 import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
 
+interface NavigationItem {
+  name: string;
+  href: string;
+  current: boolean;
+}
+
+interface UserNavigationItem {
+  name: string;
+}
+
+interface User {
+  email: string;
+  password: string;
+}
+
 const router = useRouter()
-const navigation = [
+const navigation: NavigationItem[] = [
   { name: 'Filmes', href: 'films', current: false },
   { name: 'Locação', href: 'location', current: false },
   { name: 'Usuários', href: 'users', current: false },
   { name: 'Clientes', href: 'clients', current: false }
 ]
-const userNavigation = [{ name: 'Configuração' }, { name: 'Sair' }]
-const user = ref([])
+const userNavigation: UserNavigationItem[] = [{ name: 'Configuração' }, { name: 'Sair' }]
+const user = ref<User[]>([])
 
 onMounted(async () => {
   const storedUserLogin = localStorage.getItem('userLogin')
