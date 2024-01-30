@@ -185,7 +185,7 @@ interface User {
 const router = useRouter()
 const navigation: NavigationItem[] = [
   { name: 'Filmes', href: 'films', current: false },
-  { name: 'Locação', href: 'location', current: false },
+  { name: 'Locação', href: 'locations', current: false },
   { name: 'Usuários', href: 'users', current: false },
   { name: 'Clientes', href: 'clients', current: false }
 ]
@@ -202,7 +202,6 @@ const handleButtonClick = (route: any, page: string) => {
   pageName = page
   router.push({ name: route })
 }
-
 
 const logout = () => {
   localStorage.removeItem('userLogin')
