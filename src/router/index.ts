@@ -31,6 +31,15 @@ const router = createRouter({
       meta: { title: 'Usuários' }
     },
     {
+      path: '/user/:id',
+      name: 'user',
+      components: {
+        default: UserConfigPage,
+        layout: LayoutClean,
+      },
+      props: true,
+    },
+    {
       path: '/clients',
       name: 'clients',
       components: {
@@ -38,6 +47,15 @@ const router = createRouter({
         layout: LayoutPanel,
       },
       meta: { title: 'Clientes' }
+    },
+    {
+      path: '/client/:id',
+      name: 'client',
+      components: {
+        default: ClientConfigPage,
+        layout: LayoutClean,
+      },
+      props: true,
     },
     {
       path: '/location',
@@ -56,24 +74,6 @@ const router = createRouter({
         layout: LayoutPanel,
       },
       meta: { title: 'Filmes' }
-    },
-    {
-      path: '/user',
-      name: 'user',
-      components: {
-        default: UserConfigPage,
-        layout: LayoutClean,
-      },
-      props: true,
-    },
-    {
-      path: '/client',
-      name: 'client',
-      components: {
-        default: ClientConfigPage,
-        layout: LayoutClean,
-      },
-      props: true,
     },
     {
       path: '/location-details',

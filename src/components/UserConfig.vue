@@ -26,11 +26,29 @@
 
           <div class="sm:col-span-3">
             <label for="document" class="block text-sm font-medium leading-6 text-gray-900"
+              >Email *</label
+            >
+            <div class="mt-1">
+              <input
+                type="email"
+                v-model="email"
+                name="email"
+                id="email"
+                required
+                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+            </div>
+          </div>
+
+          <div class="sm:col-span-3">
+            <label for="document" class="block text-sm font-medium leading-6 text-gray-900"
               >Documento (CPF) *</label
             >
             <div class="mt-1">
               <input
-                v-mask="'###.###.###-##'"
+                v-maska
+                data-maska="###.###.###-##"
+                placeholder="000.000.000-00"
                 type="text"
                 v-model="document"
                 name="document"
@@ -108,10 +126,12 @@
 import { Switch, SwitchGroup } from '@headlessui/vue'
 import { useRouter } from 'vue-router'
 import { ref, onMounted, watch, onUnmounted } from 'vue'
+import { vMaska } from 'maska'
 
 interface User {
   id: number
   name: string
+  email: string
   document: string
   password: string
   isActive: boolean
@@ -124,30 +144,29 @@ const users = ref<Array<User>>(initialUsers)
 const router = useRouter()
 
 const name = ref('')
+const email = ref('')
 const document = ref('')
 const password = ref('')
 const isActive = ref(false)
 
 onMounted(() => {
+  cleanFields()
+
   const unwatch = watch(
     () => router.currentRoute.value.params.id,
     (newUserId) => {
-      const userId = getEditUserId()
-
-      if (userId !== null) {
-        const userToEdit = users.value.find((user) => user.id === userId)
+      const userId = router.currentRoute.value.params.id
+      console.log(userId, "userId")
+      if (userId !== 'new') {
+        const userToEdit = users.value.find((user) => user.id.toString() === userId)
 
         if (userToEdit) {
           name.value = userToEdit.name
+          email.value = userToEdit.email
           document.value = userToEdit.document
           password.value = userToEdit.password
           isActive.value = userToEdit.isActive
         }
-      } else {
-        name.value = ''
-        document.value = ''
-        password.value = ''
-        isActive.value = false
       }
     },
     { immediate: true }
@@ -158,26 +177,28 @@ onMounted(() => {
   })
 })
 
-const getEditUserId = () => {
-  const editUserId = localStorage.getItem('editUserId')
-
-  const userId = editUserId ? Number(editUserId) : null
-  return userId
+const cleanFields = () => {
+  name.value = ''
+  email.value = ''
+  document.value = ''
+  password.value = ''
+  isActive.value = false
 }
 
 const handleSubmit = () => {
-  const userId = getEditUserId()
+  const userId = router.currentRoute.value.params.id
 
   const newUser: User = {
-    id: userId !== null ? userId : users.value.length + 1,
+    id: userId !== 'new' ? Number(userId) : users.value.length + 1,
     name: name.value,
+    email: email.value,
     document: document.value,
     password: password.value,
     isActive: isActive.value
   }
 
-  if (userId !== null) {
-    const userIndex = users.value.findIndex((user) => user.id === userId)
+  if (userId !== 'new') {
+    const userIndex = users.value.findIndex((user) => user.id.toString() === userId)
 
     if (userIndex !== -1) {
       users.value[userIndex] = newUser
@@ -187,7 +208,6 @@ const handleSubmit = () => {
   }
 
   localStorage.removeItem('editUserId')
-
   localStorage.setItem('users', JSON.stringify(users.value))
   router.push({ name: 'users' })
 }

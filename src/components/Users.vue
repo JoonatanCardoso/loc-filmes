@@ -120,8 +120,9 @@ const deleteUser = (index) => {
 };
 
 const router = useRouter();
+
 const newUser = () => {
-  router.push({ name: 'user' });
+  router.push({ name: 'user', params: { id: 'new'} })
 };
 
 const navigateToEditUser = (userId) => {
