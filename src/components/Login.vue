@@ -81,15 +81,18 @@ import { useRouter } from 'vue-router'
 import { useNotification } from '@kyvg/vue3-notification'
 
 interface User {
+  id: number
   email: string
   password: string
 }
 
 const users = ref<User[]>([])
+const id = ref<number>()
 const email = ref<string>('')
 const password = ref<string>('')
 const router = useRouter()
 const notification = useNotification()
+const localStorageKey = 'userLogin';
 
 const login = () => {
   const verify = users.value.find(
@@ -97,6 +100,7 @@ const login = () => {
   )
 
   if (verify) {
+    localStorage.setItem(localStorageKey, JSON.stringify(verify))
     notification.notify({
       title: `Bem vindo(a)!`,
       type: 'success'
