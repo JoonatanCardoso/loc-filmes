@@ -50,3 +50,9 @@ npm run test:unit
 ```sh
 npm run lint
 ```
+
+### Access the first login with the default user admin
+```
+email: admin@admin.com
+password: admin
+```
